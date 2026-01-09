@@ -66,50 +66,93 @@ class LLMFactory:
         """
         configs = {}
         
-        # Azure OpenAI models
-        if os.getenv("AZURE_OPENAI_API_KEY") and os.getenv("AZURE_OPENAI_ENDPOINT"):
-            configs["o4-mini"] = ModelConfig(
-                name="o4-mini",
-                provider_type="azure",
-                api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-                endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-                deployment_name="o4-mini"
-            )
+        # # Azure OpenAI models
+        # if os.getenv("AZURE_OPENAI_API_KEY") and os.getenv("AZURE_OPENAI_ENDPOINT"):
+        #     configs["o4-mini"] = ModelConfig(
+        #         name="o4-mini",
+        #         provider_type="azure",
+        #         api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+        #         endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+        #         deployment_name="o4-mini"
+        #     )
             
+        #     configs["gpt-4o"] = ModelConfig(
+        #         name="gpt-4o",
+        #         provider_type="azure",
+        #         api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+        #         endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+        #         deployment_name="gpt-4o"
+        #     )
+            
+        #     configs["gpt-4o-mini"] = ModelConfig(
+        #         name="gpt-4o-mini",
+        #         provider_type="azure",
+        #         api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+        #         endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+        #         deployment_name="gpt-4o-mini"
+        #     )
+            
+        #     configs["o3"] = ModelConfig(
+        #         name="o3",
+        #         provider_type="azure",
+        #         api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+        #         endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+        #         deployment_name="o3"
+        #     )
+        
+        #     configs["gpt-5"] = ModelConfig(
+        #         name="gpt-5",
+        #         provider_type="azure",
+        #         api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+        #         endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+        #         deployment_name="gpt-5"
+        #     )
+        
+        # OpenRouter models
+        if os.getenv("OPENROUTER_API_KEY"):
+
+            # Add OpenAI models via OpenRouter
             configs["gpt-4o"] = ModelConfig(
                 name="gpt-4o",
-                provider_type="azure",
-                api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-                endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-                deployment_name="gpt-4o"
+                provider_type="openrouter",
+                api_key=os.getenv("OPENROUTER_API_KEY"),
+                base_url="https://openrouter.ai/api/v1",
+                model_name="openai/gpt-4o"
             )
             
             configs["gpt-4o-mini"] = ModelConfig(
                 name="gpt-4o-mini",
-                provider_type="azure",
-                api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-                endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-                deployment_name="gpt-4o-mini"
+                provider_type="openrouter",
+                api_key=os.getenv("OPENROUTER_API_KEY"),
+                base_url="https://openrouter.ai/api/v1",
+                model_name="openai/gpt-4o-mini"
             )
             
             configs["o3"] = ModelConfig(
                 name="o3",
-                provider_type="azure",
-                api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-                endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-                deployment_name="o3"
+                provider_type="openrouter",
+                api_key=os.getenv("OPENROUTER_API_KEY"),
+                base_url="https://openrouter.ai/api/v1",
+                model_name="openai/o3"
             )
-        
+            
+            configs["o4-mini"] = ModelConfig(
+                name="o4-mini",
+                provider_type="openrouter",
+                api_key=os.getenv("OPENROUTER_API_KEY"),
+                base_url="https://openrouter.ai/api/v1",
+                model_name="openai/o4-mini"
+            )
+
             configs["gpt-5"] = ModelConfig(
                 name="gpt-5",
-                provider_type="azure",
-                api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-                endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-                deployment_name="gpt-5"
+                provider_type="openrouter",
+                api_key=os.getenv("OPENROUTER_API_KEY"),
+                base_url="https://openrouter.ai/api/v1",
+                model_name="openai/gpt-5"
             )
-        
-        # OpenRouter models
-        if os.getenv("OPENROUTER_API_KEY"):
+            ###
+
             configs["qwen-3-32b"] = ModelConfig(
                 name="qwen-3-32b",
                 provider_type="openrouter",

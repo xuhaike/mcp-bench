@@ -146,8 +146,10 @@ install_uv() {
     fi
     
     curl -LsSf https://astral.sh/uv/install.sh | sh
-    export PATH="$HOME/.cargo/bin:$PATH"
-    
+
+    # Add both possible uv installation locations to PATH
+    export PATH="$HOME/.cargo/bin:$HOME/.local/bin:$PATH"
+
     if command_exists uv; then
         log_success "uv installed: $(uv --version)"
     else
@@ -228,7 +230,7 @@ install_python_dependencies() {
         # Use uv if available, fallback to pip
         if command_exists uv; then
             log_info "Using uv to install Python dependencies..."
-            uv pip install -r requirements.txt
+            uv pip install --system --break-system-packages -r requirements.txt
         else
             log_info "Using pip to install Python dependencies..."
             python3 -m pip install --upgrade pip
@@ -397,10 +399,10 @@ install_python_server_dependencies() {
                 
                 if command_exists uv; then
                     log_info "Installing unit-converter-mcp dependencies with uv..."
-                    uv pip install fastmcp || log_warning "Failed to install fastmcp"
+                    uv pip install --system --break-system-packages fastmcp || log_warning "Failed to install fastmcp"
                     if [ -f "pyproject.toml" ]; then
                         log_info "Installing unit-converter-mcp package in editable mode..."
-                        uv pip install -e . || log_warning "uv install failed for unit-converter-mcp"
+                        uv pip install --system --break-system-packages -e . || log_warning "uv install failed for unit-converter-mcp"
                     fi
                 else
                     log_warning "uv not found, installing unit-converter-mcp dependencies with pip"
@@ -425,10 +427,10 @@ install_python_server_dependencies() {
                 
                 if command_exists uv; then
                     log_info "Installing mcp-reddit dependencies with uv..."
-                    uv pip install redditwarp fastmcp dnspython praw uvicorn hatchling || log_warning "Some dependencies may have failed"
+                    uv pip install --system --break-system-packages redditwarp fastmcp dnspython praw uvicorn hatchling || log_warning "Some dependencies may have failed"
                     if [ -f "pyproject.toml" ]; then
                         log_info "Installing mcp-reddit package in editable mode..."
-                        uv pip install -e . || log_warning "uv install failed for mcp-reddit"
+                        uv pip install --system --break-system-packages -e . || log_warning "uv install failed for mcp-reddit"
                     fi
                 else
                     log_warning "uv not found, installing mcp-reddit dependencies with pip"
@@ -443,10 +445,10 @@ install_python_server_dependencies() {
                 
                 if command_exists uv; then
                     log_info "Installing time-mcp dependencies with uv..."
-                    uv pip install mcp pydantic tzdata tzlocal || log_warning "Failed to install dependencies"
+                    uv pip install --system --break-system-packages mcp pydantic tzdata tzlocal || log_warning "Failed to install dependencies"
                     if [ -f "pyproject.toml" ]; then
                         log_info "Installing time-mcp package in editable mode..."
-                        uv pip install -e . || log_warning "uv install failed for time-mcp"
+                        uv pip install --system --break-system-packages -e . || log_warning "uv install failed for time-mcp"
                     fi
                 else
                     log_warning "uv not found, installing time-mcp dependencies with pip"
@@ -459,10 +461,10 @@ install_python_server_dependencies() {
             elif [ -f "uv.lock" ] && command_exists uv; then
                 uv sync 2>/dev/null || log_warning "uv sync failed for $server"
             elif [ -f "pyproject.toml" ] && command_exists uv; then
-                uv pip install -e . 2>/dev/null || log_warning "uv install failed for $server"
+                uv pip install --system --break-system-packages -e . 2>/dev/null || log_warning "uv install failed for $server"
             elif [ -f "requirements.txt" ]; then
                 if command_exists uv; then
-                    uv pip install -r requirements.txt 2>/dev/null || log_warning "uv pip install failed for $server"
+                    uv pip install --system --break-system-packages -r requirements.txt 2>/dev/null || log_warning "uv pip install --system --break-system-packages failed for $server"
                 else
                     python3 -m pip install -r requirements.txt 2>/dev/null || log_warning "pip install failed for $server"
                 fi
