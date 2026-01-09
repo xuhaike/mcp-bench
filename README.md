@@ -45,7 +45,20 @@ MCP-Bench is a comprehensive evaluation framework designed to assess Large Langu
 
 ## Quick Start
 
-### Installation
+> **📚 For detailed setup instructions and troubleshooting, see [SETUP.md](SETUP.md)**
+
+### Automated Setup (Recommended)
+
+```bash
+# Clone the repository
+git clone https://github.com/accenture/mcp-bench.git
+cd mcp-bench
+
+# Run automated setup script
+./setup.sh
+```
+
+### Manual Installation
 
 1. **Clone the repository**
 ```bash
